@@ -1,0 +1,324 @@
+.App {
+  text-align: center;
+  padding: 20px;
+  font-family: sans-serif;
+  padding-bottom: 60px; /* space for fixed footer */
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 16px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 10px;
+}
+
+/* === Base Card Style === */
+.card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+/* Flip effect */
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front & Back Faces */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #333;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.card-front {
+  background-color: #fff;
+}
+
+.card-back {
+  background-color: #ccc;
+  transform: rotateY(180deg);
+}
+
+.card-back img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* === Reset Button === */
+.reset-button {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 12px 24px;
+  border: 2px solid #1d152c;
+  border-radius: 10px;
+  background-color: #f3ebfb;
+  color: #1d152c;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: #e4d7f7;
+}
+
+/* === Level-based scaling === */
+.app-container.level-2 .card-inner {
+  transform: scale(1);
+}
+
+.app-container.level-3 .card-inner {
+  transform: scale(1.05);
+}
+
+.app-container.level-4 .card-inner {
+  transform: scale(1.1);
+}
+
+.app-container.level-5 .card-inner,
+.app-container.level-6 .card-inner,
+.app-container.level-7 .card-inner,
+.app-container.level-8 .card-inner,
+.app-container.level-9 .card-inner,
+.app-container.level-10 .card-inner {
+  transform: scale(1.15);
+}
+
+/* === Loading screen === */
+.loading-container {
+  height: 100vh;
+  background-color: #f3ebfb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.rotating {
+  width: 150px;
+  height: 150px;
+  animation: rotation 1.5s linear infinite;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* === Footer === */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f3ebfb;
+  color: #1d152c;
+  text-align: center;
+  font-weight: 600;
+  padding: 12px 0;
+  font-size: 16px;
+  user-select: none;
+  box-shadow: 0 -2px 6px rgba(29, 21, 44, 0.1);
+  z-index: 100;
+}
+
+/* === Fail popup overlay === */
+.fail-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+/* Fail popup content */
+.fail-content {
+  position: relative;
+  background: #f3ebfb;
+  padding: 40px 20px 20px 20px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 90vw;
+  max-height: 90vh;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  overflow: auto;
+  pointer-events: auto;
+}
+
+/* Fail image */
+.fail-image {
+  max-width: 80vw;
+  width: 400px;
+  height: auto;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Center the Try Again button */
+.fail-content .reset-button {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 24px;
+  border: 2px solid #1d152c;
+  border-radius: 10px;
+  color: #f3ebfb;
+  background-color: #1d152c;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.fail-content .reset-button:hover {
+  background-color: #e4d7f7;
+}
+
+/* Floating close button on top right */
+.fail-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  user-select: none;
+  z-index: 10000;
+}
+
+.fail-close img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* === TAC Quiz Section === */
+.tac-quiz {
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px solid #1d152c;
+  border-radius: 12px;
+  background-color: #ffffff;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question-number {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.question-text {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1d152c;
+}
+
+.options {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.option {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  background-color: #f9f9f9;
+}
+
+.option:hover {
+  background-color: #e4d7f7;
+}
+
+.option.selected {
+  border-color: #1d152c;
+  background-color: #e4d7f7;
+}
+
+.option.correct {
+  background-color: #c8f7c5;
+  border-color: #28a745;
+  color: #1c4d1c;
+}
+
+.option.incorrect {
+  background-color: #f7c5c5;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+/* Next Button */
+.next-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #1d152c;
+  color: #f3ebfb;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  float: right;
+  transition: background-color 0.3s ease;
+}
+
+.next-button:hover:enabled {
+  background-color: #33254b;
+}
+
+.next-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
